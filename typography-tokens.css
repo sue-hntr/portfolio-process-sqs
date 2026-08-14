@@ -55,6 +55,22 @@
    H6        Sans    0.75rem / 12px  — metadata / caption
    L7 (link) Sans    1rem / 16px      — .text-link
    L8 (cta)  Sans    0.875rem / 14px  — .text-cta (uppercase)
+
+   ------------------------------------------------------------------------
+   RESPONSIVE OVERRIDES — H1/H2/H3 only
+   ------------------------------------------------------------------------
+   H1 and H2 are the sizes most likely to wrap awkwardly or overpower a
+   narrow layout; H3 gets a smaller step for the same reason. H4–H6 and
+   the link/CTA classes are already small enough that they don't need
+   breakpoint-specific sizing.
+
+   Two breakpoints, matching common tablet/phone widths:
+     ≤768px (tablet)  H1 2.5rem/40px   H2 1.75rem/28px  H3 1.25rem/20px
+     ≤480px (phone)   H1 2.25rem/36px  H2 1.5rem/24px   H3 1.125rem/18px
+
+   Implemented by re-declaring the tokens inside :root media queries, so
+   the h1/h2/h3 rules below (which already reference var(--font-size-h1)
+   etc.) pick up the new values automatically — no duplicate selectors.
    ========================================================================== */
 
 :root {
@@ -237,4 +253,27 @@ h6 {
   color: var(--color-cta-hover);
   letter-spacing: 0.08em;
   text-decoration: underline;
+}
+
+/* ==========================================================================
+   RESPONSIVE OVERRIDES — H1, H2, H3
+   Re-declares just the tokens that need to shrink on smaller viewports;
+   h1/h2/h3 above already reference these via var(), so no selectors are
+   duplicated here.
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  :root {
+    --font-size-h1: 2.5rem;    /* 40px */
+    --font-size-h2: 1.75rem;   /* 28px */
+    --font-size-h3: 1.25rem;   /* 20px */
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --font-size-h1: 2.25rem;   /* 36px */
+    --font-size-h2: 1.5rem;    /* 24px */
+    --font-size-h3: 1.125rem;  /* 18px */
+  }
 }

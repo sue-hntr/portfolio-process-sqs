@@ -169,6 +169,26 @@
   }
 
   /* ==========================================================================
+     RESPONSIVE OVERRIDES — H1, H2, H3 (mirrors typography-tokens.css)
+     ========================================================================== */
+
+  @media (max-width: 768px) {
+    :root {
+      --font-size-h1: 2.5rem;    /* 40px */
+      --font-size-h2: 1.75rem;   /* 28px */
+      --font-size-h3: 1.25rem;   /* 20px */
+    }
+  }
+
+  @media (max-width: 480px) {
+    :root {
+      --font-size-h1: 2.25rem;   /* 36px */
+      --font-size-h2: 1.5rem;    /* 24px */
+      --font-size-h3: 1.125rem;  /* 18px */
+    }
+  }
+
+  /* ==========================================================================
      Page chrome for this preview only — none of this is part of the token
      system and none of it ships to Squarespace.
      ========================================================================== */

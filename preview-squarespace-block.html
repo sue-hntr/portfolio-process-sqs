@@ -268,6 +268,28 @@
     gap: 2rem;
     align-items: center;
   }
+
+  /* ==========================================================================
+     RESPONSIVE OVERRIDES — H1, H2, H3 (mirrors typography-tokens.css)
+     Scoped to .typo-preview since that's where these tokens live in this
+     file (rather than :root, as in the main stylesheet).
+     ========================================================================== */
+
+  @media (max-width: 768px) {
+    .typo-preview {
+      --font-size-h1: 2.5rem;    /* 40px */
+      --font-size-h2: 1.75rem;   /* 28px */
+      --font-size-h3: 1.25rem;   /* 20px */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .typo-preview {
+      --font-size-h1: 2.25rem;   /* 36px */
+      --font-size-h2: 1.5rem;    /* 24px */
+      --font-size-h3: 1.125rem;  /* 18px */
+    }
+  }
 </style>
 
 <div class="typo-preview">
