@@ -63,6 +63,14 @@ site-wide bump to 17–18px base (Design → Fonts → Paragraph) later — **no
 changed in this pass, since it's scoped to the token hierarchy, not the
 global base size.
 
+## Dev tooling (not part of the Squarespace deliverable)
+
+`static-server.mjs` and `preview.html` are local-only files used during Claude
+Code work sessions to visually review the type scale in a browser before
+anything gets pasted into Squarespace. They're not meant to be uploaded,
+linked, or referenced anywhere on the live site — only `typography-tokens.css`
+goes into Design → Custom CSS.
+
 ## Out of scope (by design)
 
 - Brand colors are declared as tokens but not applied broadly — only used as
