@@ -26,8 +26,54 @@
     --font-serif: "Ovo", serif;
     --font-sans: "Nunito Sans", sans-serif;
 
-    --color-primary: #891085;
-    --color-secondary: #008080;
+    /* ---- Color tokens — Phase 2 (mirrors typography-tokens.css) ---- */
+
+    /* Primitives */
+    --magenta-900: #891085;
+    --magenta-900-rgb: 137, 16, 133;
+    --magenta-700: #CD18C7;
+    --magenta-500: #CF79CC;
+    --magenta-200: #F7BBF5;
+    --magenta-100: #FCE8FC;
+
+    --teal-900: #007580;
+    --teal-900-rgb: 0, 117, 128;
+    --teal-600: #00B4C5;
+    --teal-300: #4CE8F7;
+    --teal-100: #D4F4F7;
+
+    --cool-50:  #F7FBFC;
+    --cool-100: #EAF3F4;
+    --cool-300: #C3D6D8;
+    --cool-600: #728A8D;
+    --cool-900: #1E2C2E;
+
+    /* Semantic: surfaces */
+    --color-background: var(--cool-50);
+    --color-background-alt: var(--cool-100);
+    --color-border: var(--cool-300);
+
+    /* Semantic: text */
+    --color-text-body: var(--cool-900);
+    --color-text-muted: var(--cool-600);
+    --color-text-link: var(--teal-900);
+    --color-text-link-hover: var(--magenta-900);
+
+    /* Semantic: brand */
+    --color-primary: var(--magenta-900);
+    --color-primary-rgb: var(--magenta-900-rgb);
+    --color-primary-hover: var(--magenta-700);
+    --color-secondary: var(--teal-900);
+    --color-secondary-rgb: var(--teal-900-rgb);
+    --color-secondary-hover: var(--teal-600);
+
+    /* Semantic: CTA / buttons */
+    --color-cta-bg: var(--magenta-900);
+    --color-cta-bg-hover: var(--magenta-700);
+    --color-cta-text: #FFFFFF;
+    --color-cta-secondary-bg: var(--teal-900);
+    --color-cta-secondary-bg-hover: var(--teal-600);
+    --color-cta-secondary-text: #FFFFFF;
 
     --font-size-h1: 3rem;
     --line-height-h1: 1.1;
@@ -245,28 +291,90 @@
     margin-bottom: 0;
   }
 
-  .typo-preview .tp-swatches {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 3rem;
-  }
-
-  .typo-preview .tp-swatch {
-    flex: 1;
-    padding: 1rem;
-    border-radius: 6px;
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    color: #fff;
-  }
-
-  .typo-preview .tp-swatch.primary { background: var(--color-primary); }
-  .typo-preview .tp-swatch.secondary { background: var(--color-secondary); }
-
   .typo-preview .tp-cta-row {
     display: flex;
     gap: 2rem;
     align-items: center;
+  }
+
+  /* ==========================================================================
+     Color palette display — visual reference only, not part of the token
+     system. Shows every primitive and semantic color token added in Phase 2.
+     Scoped to .typo-preview like everything else in this file.
+     ========================================================================== */
+
+  .typo-preview .tp-palette-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e0dcd8;
+  }
+
+  .typo-preview .tp-palette-section h3 {
+    margin-bottom: 0.25rem;
+  }
+
+  .typo-preview .tp-palette-note {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    color: #6b6b6b;
+    margin: 0 0 1.25rem;
+  }
+
+  .typo-preview .tp-palette-group {
+    margin-bottom: 1.75rem;
+  }
+
+  .typo-preview .tp-palette-group h4 {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #8a8a8a;
+    margin: 0 0 0.75rem;
+  }
+
+  .typo-preview .tp-palette-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .typo-preview .tp-color-chip {
+    width: 7rem;
+  }
+
+  .typo-preview .tp-color-chip .box {
+    width: 100%;
+    height: 3.5rem;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 0.3rem;
+    box-sizing: border-box;
+  }
+
+  .typo-preview .tp-color-chip .box.on-white {
+    color: #fff;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.875rem;
+  }
+
+  .typo-preview .tp-color-chip .name {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-top: 0.4rem;
+  }
+
+  .typo-preview .tp-color-chip .hex {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.6875rem;
+    color: #8a8a8a;
   }
 
   /* ==========================================================================
@@ -350,9 +458,74 @@
     </div>
   </div>
 
-  <div class="tp-swatches">
-    <div class="tp-swatch primary">--color-primary<br>#891085</div>
-    <div class="tp-swatch secondary">--color-secondary<br>#008080</div>
+  <div class="tp-palette-section">
+    <h3>Color Tokens — Phase 2</h3>
+    <p class="tp-palette-note">Cool, teal-tinted neutrals. Tokens only — not yet applied to backgrounds/borders/CTAs; that's the next pass.</p>
+
+    <div class="tp-palette-group">
+      <h4>Primitives — Magenta</h4>
+      <div class="tp-palette-grid">
+        <div class="tp-color-chip"><div class="box" style="background:var(--magenta-100)"></div><div class="name">magenta-100</div><div class="hex">#FCE8FC</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--magenta-200)"></div><div class="name">magenta-200</div><div class="hex">#F7BBF5</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--magenta-500)"></div><div class="name">magenta-500</div><div class="hex">#CF79CC</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--magenta-700)"></div><div class="name">magenta-700</div><div class="hex">#CD18C7</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--magenta-900)"></div><div class="name">magenta-900</div><div class="hex">#891085</div></div>
+      </div>
+    </div>
+
+    <div class="tp-palette-group">
+      <h4>Primitives — Teal</h4>
+      <div class="tp-palette-grid">
+        <div class="tp-color-chip"><div class="box" style="background:var(--teal-100)"></div><div class="name">teal-100</div><div class="hex">#D4F4F7</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--teal-300)"></div><div class="name">teal-300</div><div class="hex">#4CE8F7</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--teal-600)"></div><div class="name">teal-600</div><div class="hex">#00B4C5</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--teal-900)"></div><div class="name">teal-900</div><div class="hex">#007580</div></div>
+      </div>
+    </div>
+
+    <div class="tp-palette-group">
+      <h4>Primitives — Cool Neutral</h4>
+      <div class="tp-palette-grid">
+        <div class="tp-color-chip"><div class="box" style="background:var(--cool-50); border-color:rgba(0,0,0,0.15)"></div><div class="name">cool-50</div><div class="hex">#F7FBFC</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--cool-100)"></div><div class="name">cool-100</div><div class="hex">#EAF3F4</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--cool-300)"></div><div class="name">cool-300</div><div class="hex">#C3D6D8</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--cool-600)"></div><div class="name">cool-600</div><div class="hex">#728A8D</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--cool-900)"></div><div class="name">cool-900</div><div class="hex">#1E2C2E</div></div>
+      </div>
+    </div>
+
+    <div class="tp-palette-group">
+      <h4>Semantic — Surfaces &amp; Text</h4>
+      <div class="tp-palette-grid">
+        <div class="tp-color-chip"><div class="box" style="background:var(--color-background); border-color:rgba(0,0,0,0.15)"></div><div class="name">color-background</div><div class="hex">cool-50</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--color-background-alt)"></div><div class="name">color-background-alt</div><div class="hex">cool-100</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--color-border)"></div><div class="name">color-border</div><div class="hex">cool-300</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--color-text-body)"></div><div class="name">color-text-body</div><div class="hex">cool-900</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--color-text-muted)"></div><div class="name">color-text-muted</div><div class="hex">cool-600</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--color-text-link)"></div><div class="name">color-text-link</div><div class="hex">teal-900</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--color-text-link-hover)"></div><div class="name">color-text-link-hover</div><div class="hex">magenta-900</div></div>
+      </div>
+    </div>
+
+    <div class="tp-palette-group">
+      <h4>Semantic — Brand</h4>
+      <div class="tp-palette-grid">
+        <div class="tp-color-chip"><div class="box" style="background:var(--color-primary)"></div><div class="name">color-primary</div><div class="hex">magenta-900</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--color-primary-hover)"></div><div class="name">color-primary-hover</div><div class="hex">magenta-700</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--color-secondary)"></div><div class="name">color-secondary</div><div class="hex">teal-900</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--color-secondary-hover)"></div><div class="name">color-secondary-hover</div><div class="hex">teal-600</div></div>
+      </div>
+    </div>
+
+    <div class="tp-palette-group">
+      <h4>Semantic — CTA / Buttons <span style="font-weight:400; text-transform:none; letter-spacing:0;">(white text sample shows the checked contrast)</span></h4>
+      <div class="tp-palette-grid">
+        <div class="tp-color-chip"><div class="box on-white" style="background:var(--color-cta-bg)">Aa</div><div class="name">color-cta-bg</div><div class="hex">8.48:1 ✓</div></div>
+        <div class="tp-color-chip"><div class="box on-white" style="background:var(--color-cta-bg-hover)">Aa</div><div class="name">color-cta-bg-hover</div><div class="hex">magenta-700</div></div>
+        <div class="tp-color-chip"><div class="box on-white" style="background:var(--color-cta-secondary-bg)">Aa</div><div class="name">color-cta-secondary-bg</div><div class="hex">5.45:1 ✓</div></div>
+        <div class="tp-color-chip"><div class="box on-white" style="background:var(--color-cta-secondary-bg-hover)">Aa</div><div class="name">color-cta-secondary-bg-hover</div><div class="hex">teal-600</div></div>
+      </div>
+    </div>
   </div>
 
 </div>
