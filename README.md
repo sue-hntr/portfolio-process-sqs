@@ -1,9 +1,16 @@
-# Typography Token System — suzanne-hunter.com
+# Design Token System — suzanne-hunter.com
 
-A foundational, non-destructive typography pass for the Squarespace 7.1 site.
-Defines an 8-level type hierarchy as CSS custom properties and applies it via
-Design → Custom CSS. No layout, spacing, content, or button-component styling
-is touched.
+A foundational, non-destructive design-token pass for the Squarespace 7.1 site,
+built in `typography-tokens.css` and pasted into Design → Custom CSS.
+
+- **Phase 1 (typography):** an 8-level type hierarchy as CSS custom
+  properties, applied to Squarespace's native `h1`–`h6` tags plus two opt-in
+  utility classes.
+- **Phase 2 (color):** a cool, teal-tinted color primitive + semantic token
+  system. Tokens only — not yet wired to any selector beyond what Phase 1
+  already used (see below).
+
+No layout, spacing, content, or button-component styling is touched.
 
 ## Install
 
@@ -19,7 +26,8 @@ is touched.
 ## What it does
 
 - Declares font tokens (`--font-serif` → Ovo, `--font-sans` → Nunito Sans) and
-  brand color tokens (`--color-primary`, `--color-secondary`) for reuse.
+  a full color token system (primitives + semantic layer — see Phase 2 below)
+  for reuse.
 - Styles the native `h1`–`h6` tags sitewide (font, size, weight, line-height,
   letter-spacing, margin-bottom) — works across all existing content blocks
   automatically.
@@ -55,6 +63,45 @@ labels conventionally read as hierarchy through *uppercase + letter-spacing*,
 not through shrinking further on a pure ratio — that would hurt legibility
 for no real gain. Their letter-spacing does that work instead.
 
+## Color tokens (Phase 2)
+
+Cool, teal-tinted neutrals, chosen after comparing warm/cool/true-gray
+options side by side. Two layers:
+
+**Primitives** — raw color scales, not used directly in components:
+
+| Scale | Steps |
+|---|---|
+| Magenta | 100, 200, 500, 700, 900 |
+| Teal | 100, 300, 600, 900 |
+| Cool neutral | 50, 100, 300, 600, 900 |
+
+**Semantic** — what components should actually reference:
+
+| Token | Resolves to | Use |
+|---|---|---|
+| `--color-background` / `--color-background-alt` | cool-50 / cool-100 | Page/section surfaces |
+| `--color-border` | cool-300 | Dividers, outlines |
+| `--color-text-body` / `--color-text-muted` | cool-900 / cool-600 | Body copy / secondary text |
+| `--color-text-link` / `--color-text-link-hover` | teal-900 / magenta-900 | Inline text links |
+| `--color-primary` / `--color-primary-hover` | magenta-900 / magenta-700 | Brand primary |
+| `--color-secondary` / `--color-secondary-hover` | teal-900 / teal-600 | Brand secondary |
+| `--color-cta-bg` / `--color-cta-bg-hover` / `--color-cta-text` | magenta-900 / magenta-700 / white | Primary CTA/button |
+| `--color-cta-secondary-bg` / `-hover` / `-text` | teal-900 / teal-600 / white | Secondary CTA/button |
+
+**Contrast confirmed (no adjustments made to the provided values):**
+white text on `--magenta-900` is 8.48:1 (passes AAA); white text on
+`--teal-900` is 5.45:1 (passes AA, not AAA).
+
+**Not yet applied anywhere new.** These tokens don't touch any selector this
+pass — that's deliberate, saved for CTA prototyping next. The one real side
+effect: `--color-primary`/`--color-secondary` already existed as Phase 1
+placeholders (raw hex, "reference only"). `--color-primary` is unchanged
+(`#891085`). `--color-secondary` shifts from the old placeholder `#008080`
+to the chosen `--teal-900` (`#007580`) — a small shift that `.text-link:hover`
+and `.text-cta:hover` (already live from Phase 1) pick up automatically,
+since they reference `var(--color-secondary)`.
+
 ## Flag for a future pass
 
 Nunito Sans's proportions (x-height, width) tend to read a touch small at a
@@ -73,8 +120,9 @@ goes into Design → Custom CSS.
 
 ## Out of scope (by design)
 
-- Brand colors are declared as tokens but not applied broadly — only used as
-  placeholders in `.text-link` / `.text-cta` hover states.
+- Color tokens are declared but not wired to any new selector — only the
+  Phase 1 `.text-link` / `.text-cta` hover states use them (see above).
+  Applying colors to backgrounds, borders, and CTAs is the next phase.
 - Section spacing / global padding — untouched.
 - Squarespace's native button component styling (the actual `.sqs-button`
   system) — untouched. `.text-cta` is a standalone text style, not a button

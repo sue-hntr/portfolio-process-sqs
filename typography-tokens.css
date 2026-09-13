@@ -78,9 +78,71 @@
   --font-serif: "Ovo", serif;
   --font-sans: "Nunito Sans", sans-serif;
 
-  /* ---- Brand color tokens (reference only — not applied broadly this pass) ---- */
-  --color-primary: #891085;
-  --color-secondary: #008080;
+  /* ==========================================================================
+     COLOR TOKENS — Phase 2
+     Cool, teal-tinted neutral direction, chosen after comparing warm/cool/
+     true-gray options side by side. Tokens only — nothing below is applied
+     to a selector yet; wiring these to buttons/links/backgrounds happens
+     in the next pass when CTAs are prototyped.
+
+     Supersedes the Phase 1 placeholder --color-primary / --color-secondary
+     (previously raw hex, "reference only"): --color-primary is unchanged
+     (#891085). --color-secondary shifts from the old placeholder #008080
+     to the chosen --teal-900 (#007580) — a small shift, flagged because
+     .text-link:hover / .text-cta:hover below already reference
+     var(--color-secondary) and will pick up this new value automatically.
+
+     Contrast confirmed unchanged from spec (no adjustments made):
+       white on --magenta-900: 8.48:1 (AAA)
+       white on --teal-900:    5.45:1 (AA, not AAA)
+     ========================================================================== */
+
+  /* ---- Primitives ---- */
+  --magenta-900: #891085;
+  --magenta-900-rgb: 137, 16, 133;
+  --magenta-700: #CD18C7;
+  --magenta-500: #CF79CC;
+  --magenta-200: #F7BBF5;
+  --magenta-100: #FCE8FC;
+
+  --teal-900: #007580;
+  --teal-900-rgb: 0, 117, 128;
+  --teal-600: #00B4C5;
+  --teal-300: #4CE8F7;
+  --teal-100: #D4F4F7;
+
+  --cool-50:  #F7FBFC;
+  --cool-100: #EAF3F4;
+  --cool-300: #C3D6D8;
+  --cool-600: #728A8D;
+  --cool-900: #1E2C2E;
+
+  /* ---- Semantic: surfaces ---- */
+  --color-background: var(--cool-50);
+  --color-background-alt: var(--cool-100);
+  --color-border: var(--cool-300);
+
+  /* ---- Semantic: text ---- */
+  --color-text-body: var(--cool-900);
+  --color-text-muted: var(--cool-600);
+  --color-text-link: var(--teal-900);
+  --color-text-link-hover: var(--magenta-900);
+
+  /* ---- Semantic: brand ---- */
+  --color-primary: var(--magenta-900);
+  --color-primary-rgb: var(--magenta-900-rgb);
+  --color-primary-hover: var(--magenta-700);
+  --color-secondary: var(--teal-900);
+  --color-secondary-rgb: var(--teal-900-rgb);
+  --color-secondary-hover: var(--teal-600);
+
+  /* ---- Semantic: CTA / buttons ---- */
+  --color-cta-bg: var(--magenta-900);
+  --color-cta-bg-hover: var(--magenta-700);
+  --color-cta-text: #FFFFFF;
+  --color-cta-secondary-bg: var(--teal-900);
+  --color-cta-secondary-bg-hover: var(--teal-600);
+  --color-cta-secondary-text: #FFFFFF;
 
   /* ---- H1 — Serif — page / hero title ---- */
   --font-size-h1: 3rem;          /* 48px */
