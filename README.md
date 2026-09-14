@@ -9,8 +9,12 @@ built in `typography-tokens.css` and pasted into Design → Custom CSS.
 - **Phase 2 (color):** a cool, teal-tinted color primitive + semantic token
   system. Tokens only — not yet wired to any selector beyond what Phase 1
   already used (see below).
+- **Phase 3 (spacing):** an 8-step modular spacing scale, applied via one
+  native tag (`p`), one native structural selector (`section.page-section`),
+  and two opt-in classes for card padding/gaps.
 
-No layout, spacing, content, or button-component styling is touched.
+No content, block structure, or button-component styling is touched. Phase 3
+is the first pass to touch spacing (paragraph rhythm + section padding).
 
 ## Install
 
@@ -19,9 +23,10 @@ No layout, spacing, content, or button-component styling is touched.
    in (append below anything already there, or replace if this is the whole
    custom stylesheet).
 3. Save. Changes apply immediately — no template edits needed.
-4. To use the two custom classes on specific elements: select the text/button
-   in the Squarespace editor, open its block settings, and add `text-link` or
-   `text-cta` in the **Custom CSS Class** field.
+4. To use the opt-in custom classes on specific elements (`text-link`,
+   `text-cta`, `card-padding`, `card-grid-gap`): select the element in the
+   Squarespace editor, open its block settings, and add the class name in
+   the **Custom CSS Class** field.
 
 ## What it does
 
@@ -102,6 +107,57 @@ to the chosen `--teal-900` (`#007580`) — a small shift that `.text-link:hover`
 and `.text-cta:hover` (already live from Phase 1) pick up automatically,
 since they reference `var(--color-secondary)`.
 
+## Spacing tokens (Phase 3)
+
+8-step modular scale, 4px base, rem units — sized for a content-driven
+portfolio site, not a dense data interface:
+
+| Token | Value | Suggested use |
+|---|---|---|
+| `--space-1` | 0.25rem / 4px | Tight inline spacing |
+| `--space-2` | 0.5rem / 8px | Small gaps, icon spacing |
+| `--space-3` | 1rem / 16px | Default paragraph/element spacing |
+| `--space-4` | 1.5rem / 24px | Card padding, related-element grouping |
+| `--space-5` | 2rem / 32px | Spacing between distinct components |
+| `--space-6` | 3rem / 48px | Spacing between major content blocks |
+| `--space-7` | 4rem / 64px | Section padding (top/bottom) |
+| `--space-8` | 6rem / 96px | Major section breaks, hero spacing |
+
+**Applied to:**
+
+| Selector | Rule | Type |
+|---|---|---|
+| `p` | `margin-bottom: var(--space-3)` | Native tag |
+| `section.page-section` | `padding-top`/`padding-bottom: var(--space-7)` | Native structural selector |
+| `.card-padding` | `padding: var(--space-4)` | Opt-in class |
+| `.card-grid-gap` | `gap: var(--space-5)` | Opt-in class |
+
+**Why cards use opt-in classes, not native selectors:** Squarespace's
+project/portfolio grid markup varies a lot by block type — a Summary
+Block, Gallery Block, and Portfolio Collection each render completely
+different class names. Rather than guess at your site's actual markup,
+`.card-padding` and `.card-grid-gap` work like `.text-link`/`.text-cta` —
+add the class name in the Squarespace editor's Custom CSS Class field on
+whichever card/grid-container elements you want spaced. `.card-grid-gap`
+only has a visible effect if the container it's applied to is already
+`display: flex` or `display: grid` — worth a quick visual check after
+applying.
+
+**Section padding note:** `section.page-section` targets Squarespace
+7.1's near-universal section wrapper. If a section already has explicit
+padding set in the editor's Section Design panel, that inline setting
+always wins over this stylesheet — so existing per-section spacing you've
+already dialed in stays intact. If your template doesn't use this exact
+class, the rule simply matches nothing (safe no-op); verify via browser
+inspector if section padding doesn't visibly change.
+
+**Flagged, not fixed — heading margins vs. this scale:** H4–H6's existing
+`margin-bottom` (0.5rem / 8px, from Phase 1) already lands exactly on
+`--space-2`. H1/H2 (0.75rem / 12px) and H3 (0.625rem / 10px) fall between
+`--space-2` (8px) and `--space-3` (16px) and don't match any step on this
+scale. Left as-is per this phase's "don't touch typography tokens" scope —
+worth a look if a future pass wants every heading scale-aligned.
+
 ## Flag for a future pass
 
 Nunito Sans's proportions (x-height, width) tend to read a touch small at a
@@ -122,8 +178,10 @@ goes into Design → Custom CSS.
 
 - Color tokens are declared but not wired to any new selector — only the
   Phase 1 `.text-link` / `.text-cta` hover states use them (see above).
-  Applying colors to backgrounds, borders, and CTAs is the next phase.
-- Section spacing / global padding — untouched.
+  Applying colors to backgrounds, borders, and CTAs is a future phase.
+- Responsive/breakpoint spacing — fixed values only this pass; deferred to
+  after custom CTA/component work.
+- Component-level tokens (border-radius, shadow, border-width) — next phase.
 - Squarespace's native button component styling (the actual `.sqs-button`
-  system) — untouched. `.text-cta` is a standalone text style, not a button
-  override.
+  system) and CTA markup — untouched. `.text-cta` is a standalone text
+  style, not a button override.

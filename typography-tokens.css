@@ -1,13 +1,19 @@
 /* ==========================================================================
-   SUZANNE-HUNTER.COM — TYPOGRAPHY TOKEN SYSTEM
+   SUZANNE-HUNTER.COM — DESIGN TOKEN SYSTEM
    Squarespace 7.1 — Design → Custom CSS
 
-   Foundational, non-destructive pass. Defines an 8-level type hierarchy as
-   CSS custom properties, then applies them to Squarespace's native h1–h6
-   selectors plus two opt-in utility classes (.text-link / .text-cta).
+   Foundational, non-destructive, phased build-out as CSS custom properties:
+     Phase 1 — Typography: 8-level type hierarchy on native h1–h6 plus two
+               opt-in utility classes (.text-link / .text-cta).
+     Phase 2 — Color: primitive + semantic color tokens (see below).
+     Phase 3 — Spacing: 8-step scale, applied via native `p`/`section.page-
+               section` plus two opt-in classes (.card-padding /
+               .card-grid-gap) — see the SPACING sections below.
 
-   Does NOT touch: layout, section spacing, block structure, existing
-   content, or Squarespace's global button component styling.
+   Does NOT touch: block structure, existing content, CTA/button markup,
+   or Squarespace's global button component styling. Phase 3 is the first
+   pass to touch section-level spacing (paragraph rhythm + section
+   padding) — everything else remains untouched.
 
    ------------------------------------------------------------------------
    THE SCALE — how the numbers were chosen
@@ -143,6 +149,32 @@
   --color-cta-secondary-bg: var(--teal-900);
   --color-cta-secondary-bg-hover: var(--teal-600);
   --color-cta-secondary-text: #FFFFFF;
+
+  /* ==========================================================================
+     SPACING TOKENS — Phase 3
+     8-step modular scale, 4px base, rem units. Tokens plus 4 application
+     rules: one native selector (paragraph rhythm), one native structural
+     selector (section padding), and two opt-in classes for card padding/
+     gaps — see the rule block below the H1-H6 selectors for why cards use
+     opt-in classes instead of guessed native markup.
+
+     FLAG — heading margin-bottom vs. this scale (not changed, per "do not
+     touch typography tokens"): H4-H6 already land exactly on --space-2
+     (8px). H1/H2 (--margin-bottom-h1/h2: 0.75rem = 12px) and H3
+     (--margin-bottom-h3: 0.625rem = 10px) fall between --space-2 (8px)
+     and --space-3 (16px) and don't match any step on this scale. Left
+     as-is rather than silently nudged onto the scale — worth a look if a
+     future pass wants every heading level scale-aligned.
+     ========================================================================== */
+
+  --space-1: 0.25rem;  /* 4px  — tight inline spacing */
+  --space-2: 0.5rem;   /* 8px  — small gaps, icon spacing */
+  --space-3: 1rem;     /* 16px — default paragraph/element spacing */
+  --space-4: 1.5rem;   /* 24px — card padding, related-element grouping */
+  --space-5: 2rem;     /* 32px — spacing between distinct components */
+  --space-6: 3rem;     /* 48px — spacing between major content blocks */
+  --space-7: 4rem;     /* 64px — section padding (top/bottom) */
+  --space-8: 6rem;     /* 96px — major section breaks, hero spacing */
 
   /* ---- H1 — Serif — page / hero title ---- */
   --font-size-h1: 3rem;          /* 48px */
@@ -338,4 +370,44 @@ h6 {
     --font-size-h2: 1.5rem;    /* 24px */
     --font-size-h3: 1.125rem;  /* 18px */
   }
+}
+
+/* ==========================================================================
+   SPACING APPLICATION — Phase 3
+   One native tag, one native structural selector, two opt-in classes.
+   Fixed values only — no breakpoint/responsive spacing this pass.
+   ========================================================================== */
+
+p {
+  margin-bottom: var(--space-3);
+}
+
+/* Squarespace 7.1's near-universal section wrapper. Low specificity (0,1,1)
+   — and Squarespace's own inline "Section Design" padding, when a section
+   has it explicitly set, always wins over an external stylesheet
+   regardless of specificity, so per-section settings still take
+   precedence automatically. If your template doesn't use this exact
+   class, this rule simply matches nothing (safe no-op) — verify via
+   inspector if section padding doesn't visibly change. */
+section.page-section {
+  padding-top: var(--space-7);
+  padding-bottom: var(--space-7);
+}
+
+/* ---- .card-padding — opt-in — padding inside cards/contained content ----
+   Apply via the Squarespace editor's "Custom CSS Class" field on a card
+   or content block. Not a native selector — project-card markup varies
+   too much by block type (Summary Block / Gallery Block / Portfolio
+   Collection) to safely guess. */
+.card-padding {
+  padding: var(--space-4);
+}
+
+/* ---- .card-grid-gap — opt-in — gaps between project cards ----
+   Apply to the card GRID CONTAINER, not individual cards. Only has an
+   effect if that container is already display:flex or display:grid
+   (most Squarespace grid/summary containers are, but not guaranteed) —
+   verify visually after applying. */
+.card-grid-gap {
+  gap: var(--space-5);
 }
