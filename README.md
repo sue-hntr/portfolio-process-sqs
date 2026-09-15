@@ -80,13 +80,15 @@ options side by side. Two layers:
 | Magenta | 100, 200, 500, 700, 900 |
 | Teal | 100, 300, 600, 900 |
 | Cool neutral | 50, 100, 300, 600, 900 |
-| `--white` | `#FFFFFF` — used for CTA text on dark backgrounds |
+| `--white` | `#FFFFFF` — CTA text on dark backgrounds, and the primary page background |
 
 **Semantic** — what components should actually reference:
 
 | Token | Resolves to | Use |
 |---|---|---|
-| `--color-background` / `--color-background-alt` | cool-50 / cool-100 | Page/section surfaces |
+| `--color-background` | white | Primary page background |
+| `--color-background-alt1` | cool-50 | Section background variant 1 |
+| `--color-background-alt2` | cool-100 | Section background variant 2 |
 | `--color-border` | cool-300 | Dividers, outlines |
 | `--color-text-body` / `--color-text-muted` | cool-900 / cool-600 | Body copy / secondary text |
 | `--color-text-link` / `--color-text-link-hover` | teal-900 / magenta-900 | Inline text links |
@@ -107,6 +109,17 @@ placeholders (raw hex, "reference only"). `--color-primary` is unchanged
 to the chosen `--teal-900` (`#007580`) — a small shift that `.text-link:hover`
 and `.text-cta:hover` (already live from Phase 1) pick up automatically,
 since they reference `var(--color-secondary)`.
+
+**Background reworked to white.** `--color-background` now resolves to
+`--white` instead of `cool-50`, to save graphics/editing time against
+existing white-background assets. The old `cool-50`/`cool-100` background
+options aren't gone — renamed to `--color-background-alt1`/`-alt2` for
+future section-background variation. Still tokens-only: nothing above is
+wired to a live selector yet. Note: the two preview HTML files
+(`preview.html`, `preview-squarespace-block.html`) intentionally keep
+their own page background on `cool-50` regardless of this change — they're
+used as a side-by-side visual reference, and a white preview background
+would wash out light swatches (e.g. `cool-50` itself, `magenta-100`).
 
 ## Spacing tokens (Phase 3)
 

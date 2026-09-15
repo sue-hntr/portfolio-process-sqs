@@ -44,9 +44,10 @@
 
     --white: #FFFFFF;
 
-    /* Semantic: surfaces */
-    --color-background: var(--cool-50);
-    --color-background-alt: var(--cool-100);
+    /* Semantic: surfaces (mirrors typography-tokens.css) */
+    --color-background: var(--white);
+    --color-background-alt1: var(--cool-50);
+    --color-background-alt2: var(--cool-100);
     --color-border: var(--cool-300);
 
     /* Semantic: text */
@@ -470,7 +471,7 @@
   }
 
   .card-demo {
-    background: var(--color-background-alt);
+    background: var(--color-background-alt2);
     border: 1px solid var(--color-border);
     border-radius: 6px;
   }
@@ -579,14 +580,16 @@
         <div class="color-chip"><div class="box" style="background:var(--cool-300)"></div><div class="name">cool-300</div><div class="hex">#C3D6D8</div></div>
         <div class="color-chip"><div class="box" style="background:var(--cool-600)"></div><div class="name">cool-600</div><div class="hex">#728A8D</div></div>
         <div class="color-chip"><div class="box" style="background:var(--cool-900)"></div><div class="name">cool-900</div><div class="hex">#1E2C2E</div></div>
+        <div class="color-chip"><div class="box" style="background:var(--white); border-color:rgba(0,0,0,0.15)"></div><div class="name">white</div><div class="hex">#FFFFFF</div></div>
       </div>
     </div>
 
     <div class="palette-group">
       <h4>Semantic — Surfaces &amp; Text</h4>
       <div class="palette-grid">
-        <div class="color-chip"><div class="box" style="background:var(--color-background); border-color:rgba(0,0,0,0.15)"></div><div class="name">color-background</div><div class="hex">cool-50</div></div>
-        <div class="color-chip"><div class="box" style="background:var(--color-background-alt)"></div><div class="name">color-background-alt</div><div class="hex">cool-100</div></div>
+        <div class="color-chip"><div class="box" style="background:var(--color-background); border-color:rgba(0,0,0,0.15)"></div><div class="name">color-background</div><div class="hex">white</div></div>
+        <div class="color-chip"><div class="box" style="background:var(--color-background-alt1); border-color:rgba(0,0,0,0.15)"></div><div class="name">color-background-alt1</div><div class="hex">cool-50</div></div>
+        <div class="color-chip"><div class="box" style="background:var(--color-background-alt2)"></div><div class="name">color-background-alt2</div><div class="hex">cool-100</div></div>
         <div class="color-chip"><div class="box" style="background:var(--color-border)"></div><div class="name">color-border</div><div class="hex">cool-300</div></div>
         <div class="color-chip"><div class="box" style="background:var(--color-text-body)"></div><div class="name">color-text-body</div><div class="hex">cool-900</div></div>
         <div class="color-chip"><div class="box" style="background:var(--color-text-muted)"></div><div class="name">color-text-muted</div><div class="hex">cool-600</div></div>

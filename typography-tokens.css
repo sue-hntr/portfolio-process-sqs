@@ -125,9 +125,15 @@
 
   --white: #FFFFFF;
 
-  /* ---- Semantic: surfaces ---- */
-  --color-background: var(--cool-50);
-  --color-background-alt: var(--cool-100);
+  /* ---- Semantic: surfaces ----
+     --color-background is white (not cool-50) to save graphics/editing
+     time against existing white-background assets. cool-50/cool-100
+     aren't discarded — renamed to -alt1/-alt2 for future section-
+     background variation. Still tokens-only: nothing below is wired to
+     a live Squarespace selector yet. */
+  --color-background: var(--white);
+  --color-background-alt1: var(--cool-50);
+  --color-background-alt2: var(--cool-100);
   --color-border: var(--cool-300);
 
   /* ---- Semantic: text ---- */
