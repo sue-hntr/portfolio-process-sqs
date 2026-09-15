@@ -123,6 +123,8 @@
   --cool-600: #728A8D;
   --cool-900: #1E2C2E;
 
+  --white: #FFFFFF;
+
   /* ---- Semantic: surfaces ---- */
   --color-background: var(--cool-50);
   --color-background-alt: var(--cool-100);
@@ -145,10 +147,10 @@
   /* ---- Semantic: CTA / buttons ---- */
   --color-cta-bg: var(--magenta-900);
   --color-cta-bg-hover: var(--magenta-700);
-  --color-cta-text: #FFFFFF;
+  --color-cta-text: var(--white);
   --color-cta-secondary-bg: var(--teal-900);
   --color-cta-secondary-bg-hover: var(--teal-600);
-  --color-cta-secondary-text: #FFFFFF;
+  --color-cta-secondary-text: var(--white);
 
   /* ==========================================================================
      SPACING TOKENS — Phase 3

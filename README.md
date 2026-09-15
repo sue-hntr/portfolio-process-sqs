@@ -80,6 +80,7 @@ options side by side. Two layers:
 | Magenta | 100, 200, 500, 700, 900 |
 | Teal | 100, 300, 600, 900 |
 | Cool neutral | 50, 100, 300, 600, 900 |
+| `--white` | `#FFFFFF` — used for CTA text on dark backgrounds |
 
 **Semantic** — what components should actually reference:
 
