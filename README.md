@@ -23,10 +23,13 @@ is the first pass to touch spacing (paragraph rhythm + section padding).
    in (append below anything already there, or replace if this is the whole
    custom stylesheet).
 3. Save. Changes apply immediately — no template edits needed.
-4. To use the opt-in custom classes on specific elements (`text-link`,
-   `text-cta`, `card-padding`, `card-grid-gap`): select the element in the
-   Squarespace editor, open its block settings, and add the class name in
-   the **Custom CSS Class** field.
+4. To use the opt-in custom classes (`text-link`, `text-cta`,
+   `card-padding`, `card-grid-gap`): write the class name into your own
+   markup, for example `<a class="text-link" href="…">` inside a Code Block.
+   A class on its own does nothing until some element carries it. (Earlier
+   versions of this README said to use a "Custom CSS Class" field on native
+   blocks. I haven't been able to confirm that field exists on 7.1 blocks,
+   so don't rely on it. If you find one, note its exact label here.)
 
 ## What it does
 
@@ -151,8 +154,8 @@ project/portfolio grid markup varies a lot by block type — a Summary
 Block, Gallery Block, and Portfolio Collection each render completely
 different class names. Rather than guess at your site's actual markup,
 `.card-padding` and `.card-grid-gap` work like `.text-link`/`.text-cta` —
-add the class name in the Squarespace editor's Custom CSS Class field on
-whichever card/grid-container elements you want spaced. `.card-grid-gap`
+write the class name into the markup of whichever card/grid-container
+elements you want spaced (for example inside a Code Block). `.card-grid-gap`
 only has a visible effect if the container it's applied to is already
 `display: flex` or `display: grid` — worth a quick visual check after
 applying.

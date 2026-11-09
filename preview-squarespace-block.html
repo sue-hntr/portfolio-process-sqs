@@ -72,20 +72,20 @@
 
     /* Semantic: CTA / buttons */
     --color-cta-bg: var(--magenta-900);
-    --color-cta-bg-hover: var(--magenta-700);
+    --color-cta-bg-hover: var(--magenta-800);
     --color-cta-text: var(--white);
     --color-cta-secondary-bg: var(--teal-900);
     --color-cta-secondary-bg-hover: var(--teal-600);
     --color-cta-secondary-text: var(--white);
 
-    --font-size-h1: 3rem;
-    --line-height-h1: 1.1;
+    --font-size-h1: 3.75rem;
+    --line-height-h1: 1.05;
     --font-weight-h1: 400;
     --letter-spacing-h1: 0;
     --margin-bottom-h1: 0.75rem;
 
-    --font-size-h2: 2rem;
-    --line-height-h2: 1.15;
+    --font-size-h2: 3rem;
+    --line-height-h2: 1.1;
     --font-weight-h2: 400;
     --letter-spacing-h2: 0;
     --margin-bottom-h2: 0.75rem;
@@ -137,6 +137,22 @@
     --space-6: 3rem;     /* 48px */
     --space-7: 4rem;     /* 64px */
     --space-8: 6rem;     /* 96px */
+
+    /* ---- Phase 4 tokens: Page Section template (mirrors typography-tokens.css) ---- */
+    --magenta-800: #9E429F;
+    --measure: 40rem;
+    --content-max: 72rem;
+    --gutter: 4rem;
+    --section-y: 6rem;
+    --module-pad: 3rem;
+    --radius-sm: 4px;
+    --radius-lg: 1rem;
+    --radius-xl: 2rem;
+    --radius-module-phone: 1rem;
+    --radius-pill: 999px;
+    --font-size-lead: 1.125rem;
+    --font-size-caption: 0.875rem;
+    --color-surface-veil: rgba(255, 255, 255, 0.75);
 
     /* Scoped chrome — contained to this block only, not a global reset */
     box-sizing: border-box;
@@ -398,17 +414,23 @@
 
   @media (max-width: 768px) {
     .typo-preview {
-      --font-size-h1: 2.5rem;    /* 40px */
-      --font-size-h2: 1.75rem;   /* 28px */
+      --font-size-h1: 3rem;      /* 48px */
+      --font-size-h2: 2.5rem;    /* 40px */
       --font-size-h3: 1.25rem;   /* 20px */
+      --gutter: 2rem;
+      --section-y: 4rem;
+      --module-pad: 2rem;
     }
   }
 
   @media (max-width: 480px) {
     .typo-preview {
-      --font-size-h1: 2.25rem;   /* 36px */
-      --font-size-h2: 1.5rem;    /* 24px */
+      --font-size-h1: 2.75rem;   /* 44px */
+      --font-size-h2: 2.25rem;   /* 36px */
       --font-size-h3: 1.125rem;  /* 18px */
+      --gutter: 1.5rem;
+      --section-y: 3rem;
+      --module-pad: 1.5rem;
     }
   }
 
@@ -504,6 +526,349 @@
     color: var(--color-text-muted);
     margin: 0;
   }
+
+/* ---- Phase 4 utility classes (mirrors typography-tokens.css) ---- */
+.typo-preview .text-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  font-weight: var(--font-weight-h5);
+  letter-spacing: var(--letter-spacing-h5);
+  text-transform: uppercase;
+  margin-bottom: var(--margin-bottom-h5);
+}
+
+.typo-preview .text-lead {
+  font-size: var(--font-size-lead);
+  line-height: 1.6;
+  max-width: var(--measure);
+}
+
+.typo-preview .text-caption {
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-text-body);
+}
+
+/* ==========================================================================
+   PHASE 4 — PAGE SECTION TEMPLATE (component)
+   Markup lives in a Code Block (classes written into the markup). The
+   wrapper is transparent so Squarespace's native section background
+   (video or color) shows through; only the module is translucent.
+   Every rule starts with .sh-section (two-class specificity) so
+   Squarespace's own link and heading styles inside a Code Block don't
+   override it, while block-level editor settings still can. No !important.
+   Modifier: add sh-section--image-left for image-left on desktop.
+   ========================================================================== */
+
+.typo-preview .sh-section,
+.typo-preview .sh-section *,
+.typo-preview .sh-section *::before,
+.typo-preview .sh-section *::after {
+  box-sizing: border-box;
+}
+
+.typo-preview .sh-section {
+  padding: var(--section-y) var(--gutter);
+  background: transparent;
+}
+
+/* Bordered, translucent module: 12-column grid, DOM order is text, then
+   buttons, then figure. */
+.typo-preview .sh-section .sh-module {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 1.5rem;
+  align-items: start;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--module-pad);
+  border: 2px solid var(--color-secondary);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface-veil);
+  color: var(--color-text-body);
+  font-family: var(--font-sans);
+}
+
+/* Default layout (image right): text and buttons in columns 1-7, figure in
+   columns 8-12 spanning both rows. */
+.typo-preview .sh-section .sh-text {
+  grid-column: 1 / 8;
+  grid-row: 1;
+}
+
+.typo-preview .sh-section .sh-actions {
+  grid-column: 1 / 8;
+  grid-row: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.typo-preview .sh-section .sh-figure {
+  grid-column: 8 / 13;
+  grid-row: 1 / 3;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* Image left on desktop: DOM order is unchanged so screen readers still
+   read the text first. */
+.typo-preview .sh-section--image-left .sh-figure {
+  grid-column: 1 / 6;
+}
+
+.typo-preview .sh-section--image-left .sh-text,
+.typo-preview .sh-section--image-left .sh-actions {
+  grid-column: 6 / 13;
+}
+
+/* Text block */
+.typo-preview .sh-section .text-eyebrow {
+  margin-top: 0;
+  color: var(--color-primary);
+}
+
+.typo-preview .sh-section .sh-title {
+  margin-top: 0;
+}
+
+.typo-preview .sh-section .sh-role {
+  margin: var(--space-4) 0 var(--space-3);
+  padding: 0;
+}
+
+.typo-preview .sh-section .sh-role dt {
+  display: block;
+  margin: 0;
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  font-weight: var(--font-weight-h6);
+  letter-spacing: var(--letter-spacing-h6);
+  text-transform: uppercase;
+}
+
+.typo-preview .sh-section .sh-role dd {
+  display: block;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.typo-preview .sh-section .text-lead {
+  margin: 0;
+}
+
+/* Badges: a real list (role="list" keeps list semantics in Safari). */
+.typo-preview .sh-section .sh-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.typo-preview .sh-section .sh-badges li {
+  margin: 0;
+  padding: 6px 14px;
+  background: var(--white);
+  border: 1px solid var(--cool-600);
+  border-radius: var(--radius-pill);
+  color: var(--cool-900);
+  font-size: var(--font-size-caption);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Figure: cool-100 placeholder fill until a real image is added. */
+.typo-preview .sh-section .sh-figure__media {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 360px;
+  border-radius: var(--radius-lg);
+  background: var(--cool-100);
+  overflow: hidden;
+}
+
+.typo-preview .sh-section .sh-figure__media img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.typo-preview .sh-section .sh-figure figcaption {
+  margin-top: var(--space-2);
+}
+
+/* Buttons, rebuilt from the live Squarespace buttons (matched rather than
+   reusing Squarespace's own classes, so they work inside a Code Block
+   without depending on Site Styles). */
+.typo-preview .sh-section .sh-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  min-width: 220px;
+  padding: 0.875rem 2.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.typo-preview .sh-section .sh-button:hover {
+  text-decoration: none;
+}
+
+.typo-preview .sh-section .sh-button:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 3px;
+}
+
+.typo-preview .sh-section .sh-button--primary {
+  background: var(--color-cta-bg);
+  border-color: var(--color-cta-bg);
+  color: var(--color-cta-text);
+  font-weight: 800;
+}
+
+.typo-preview .sh-section .sh-button--primary:hover {
+  background: var(--color-cta-bg-hover);
+  border-color: var(--color-cta-bg-hover);
+  color: var(--color-cta-text);
+}
+
+.typo-preview .sh-section .sh-button--secondary {
+  background: var(--white);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.typo-preview .sh-section .sh-button--secondary:hover {
+  background: var(--color-primary);
+  color: var(--white);
+}
+
+.typo-preview .sh-section .sh-button--tertiary {
+  background: transparent;
+  border-width: 0 0 2px 0;
+  border-color: var(--color-primary);
+  border-radius: 0;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.typo-preview .sh-section .sh-button--tertiary:hover {
+  background: var(--color-primary);
+  color: var(--white);
+}
+
+/* Tablet and phone (matches the file's existing breakpoints): one column,
+   text then buttons then figure; image becomes 16:9. The image-left
+   modifier has no effect here. */
+@media (max-width: 768px) {
+  .typo-preview .sh-section .sh-module {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .typo-preview .sh-section .sh-text,
+  .typo-preview .sh-section .sh-actions,
+  .typo-preview .sh-section .sh-figure,
+  .typo-preview .sh-section--image-left .sh-text,
+  .typo-preview .sh-section--image-left .sh-actions,
+  .typo-preview .sh-section--image-left .sh-figure {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .typo-preview .sh-section .sh-figure {
+    margin-top: var(--space-5);
+  }
+
+  .typo-preview .sh-section .sh-figure__media {
+    flex: none;
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (max-width: 480px) {
+  .typo-preview .sh-section .sh-module {
+    border-radius: var(--radius-module-phone);
+  }
+}
+
+/* Squarespace's own mobile switch is 767px: buttons stack, full width,
+   primary first. */
+@media (max-width: 767px) {
+  .typo-preview .sh-section .sh-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .typo-preview .sh-section .sh-button {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   Page Section demo chrome: PREVIEW ONLY. The gradient stands in for the
+   Squarespace section background video. None of this ships to Squarespace.
+   ========================================================================== */
+
+.typo-preview .sh-demo-hero {
+  padding: var(--space-6) var(--gutter) var(--space-5);
+}
+
+.typo-preview .sh-demo-hero h1 {
+  margin: 0;
+}
+
+.typo-preview .sh-demo-note,
+.typo-preview .sh-demo-label {
+  margin: 0;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: #6b6b6b;
+}
+
+.typo-preview .sh-demo-note {
+  margin-bottom: var(--space-3);
+  font-style: italic;
+}
+
+.typo-preview .sh-demo-label {
+  padding: var(--space-5) var(--gutter) var(--space-2);
+}
+
+.typo-preview .sh-demo-bg {
+  background: linear-gradient(115deg, #F7FBFC 0%, #D4F4F7 45%, #4CE8F7 100%);
+}
+
+/* The section demo needs the full page width, not the 46rem preview column. */
+.typo-preview.typo-preview--wide {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
 </style>
 
 <div class="typo-preview">
@@ -514,12 +879,12 @@
   </div>
 
   <div class="tp-sample">
-    <div class="tp-sample-meta"><strong>H1</strong>Serif · 3rem / 48px<br>Hero / page title</div>
+    <div class="tp-sample-meta"><strong>H1</strong>Serif · 3.75rem / 60px<br>Hero / page title</div>
     <div class="tp-sample-content"><h1>Designing with Intention</h1></div>
   </div>
 
   <div class="tp-sample">
-    <div class="tp-sample-meta"><strong>H2</strong>Serif · 2rem / 32px<br>Major section title</div>
+    <div class="tp-sample-meta"><strong>H2</strong>Serif · 3rem / 48px<br>Major section title</div>
     <div class="tp-sample-content"><h2>Selected Work</h2></div>
   </div>
 
@@ -575,6 +940,7 @@
         <div class="tp-color-chip"><div class="box" style="background:var(--magenta-200)"></div><div class="name">magenta-200</div><div class="hex">#F7BBF5</div></div>
         <div class="tp-color-chip"><div class="box" style="background:var(--magenta-500)"></div><div class="name">magenta-500</div><div class="hex">#CF79CC</div></div>
         <div class="tp-color-chip"><div class="box" style="background:var(--magenta-700)"></div><div class="name">magenta-700</div><div class="hex">#CD18C7</div></div>
+        <div class="tp-color-chip"><div class="box" style="background:var(--magenta-800)"></div><div class="name">magenta-800</div><div class="hex">#9E429F</div></div>
         <div class="tp-color-chip"><div class="box" style="background:var(--magenta-900)"></div><div class="name">magenta-900</div><div class="hex">#891085</div></div>
       </div>
     </div>
@@ -629,7 +995,7 @@
       <h4>Semantic — CTA / Buttons <span style="font-weight:400; text-transform:none; letter-spacing:0;">(white text sample shows the checked contrast)</span></h4>
       <div class="tp-palette-grid">
         <div class="tp-color-chip"><div class="box on-white" style="background:var(--color-cta-bg)">Aa</div><div class="name">color-cta-bg</div><div class="hex">8.48:1 ✓</div></div>
-        <div class="tp-color-chip"><div class="box on-white" style="background:var(--color-cta-bg-hover)">Aa</div><div class="name">color-cta-bg-hover</div><div class="hex">magenta-700</div></div>
+        <div class="tp-color-chip"><div class="box on-white" style="background:var(--color-cta-bg-hover)">Aa</div><div class="name">color-cta-bg-hover</div><div class="hex">magenta-800 · 5.62:1 ✓</div></div>
         <div class="tp-color-chip"><div class="box on-white" style="background:var(--color-cta-secondary-bg)">Aa</div><div class="name">color-cta-secondary-bg</div><div class="hex">5.45:1 ✓</div></div>
         <div class="tp-color-chip"><div class="box on-white" style="background:var(--color-cta-secondary-bg-hover)">Aa</div><div class="name">color-cta-secondary-bg-hover</div><div class="hex">teal-600</div></div>
       </div>
@@ -649,7 +1015,7 @@
     <div class="tp-spacing-row"><div class="bar-label">--space-7</div><div class="bar" style="width:var(--space-7)"></div><div class="bar-value">64px</div></div>
     <div class="tp-spacing-row"><div class="bar-label">--space-8</div><div class="bar" style="width:var(--space-8)"></div><div class="bar-value">96px</div></div>
 
-    <p class="tp-spacing-note" style="margin-top:1.75rem;"><strong style="color:#1a1a1a;">.card-padding + .card-grid-gap demo</strong> — placeholder project cards, opt-in classes applied exactly as you'd add them via the Squarespace editor's Custom CSS Class field.</p>
+    <p class="tp-spacing-note" style="margin-top:1.75rem;"><strong style="color:#1a1a1a;">.card-padding + .card-grid-gap demo</strong> — placeholder project cards, opt-in classes written into the markup, as they would be inside a Code Block.</p>
 
     <div class="tp-card-demo-grid card-grid-gap">
       <div class="tp-card-demo card-padding">
@@ -667,4 +1033,87 @@
     </div>
   </div>
 
+</div>
+
+<div class="typo-preview typo-preview--wide">
+<div class="sh-demo">
+  <div class="sh-demo-hero">
+    <p class="sh-demo-note">Preview only: placeholder hero. In real use this is the page hero above the section.</p>
+    <h1>[Landing page hero headline]</h1>
+  </div>
+
+  <p class="sh-demo-label">Page Section: image right (default)</p>
+  <div class="sh-demo-bg"><!-- preview only: gradient stands in for the Squarespace section background video -->
+<!-- ===== COPY FROM HERE: Page Section template (image right, default) ===== -->
+<!-- EDIT PER USE: the button href (case study link), the img src and alt, the id used by aria-labelledby (keep it unique on the page), and the copy. -->
+<section class="sh-section" aria-labelledby="sh-title-1">
+  <div class="sh-module">
+    <div class="sh-text">
+      <p class="text-eyebrow">Balancer</p>
+      <h2 class="sh-title" id="sh-title-1">Build Trust in Healthcare AI</h2>
+      <dl class="sh-role">
+        <dt>Role</dt>
+        <dd>UX Design/Design Leadership</dd>
+      </dl>
+      <p class="text-lead">My work on Balancer brings systems thinking, accessibility, documentation, and safe interaction design into a healthcare product where clarity and trust matter. Over time, that work expanded from individual contribution into design leadership.</p>
+      <ul class="sh-badges" role="list">
+        <li>Healthcare AI</li>
+        <li>Open source (Code for Philly)</li>
+        <li>Design system</li>
+        <li>WCAG accessibility</li>
+      </ul>
+    </div>
+    <div class="sh-actions">
+      <a class="sh-button sh-button--primary" href="[Balancer case study URL]">See work &amp; outcomes</a>
+      <!-- Optional second action, goes after the primary: <a class="sh-button sh-button--secondary" href="[URL]">Label</a> -->
+    </div>
+    <figure class="sh-figure">
+      <div class="sh-figure__media">
+        <!-- Replace this transparent placeholder src with the image URL -->
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Balancer website app main screen and Balancer design system screen in Figma">
+      </div>
+      <figcaption class="text-caption">The product was originally built by engineers from Tailwind specs; I began translating it into a workable design system in Figma.</figcaption>
+    </figure>
+  </div>
+</section>
+<!-- ===== COPY TO HERE ===== -->
+  </div>
+
+  <p class="sh-demo-label">Page Section: image left (desktop modifier)</p>
+  <div class="sh-demo-bg"><!-- preview only: gradient stands in for the Squarespace section background video -->
+<!-- ===== COPY FROM HERE: Page Section template (image left, desktop) ===== -->
+<!-- EDIT PER USE: the button href (case study link), the img src and alt, the id used by aria-labelledby (keep it unique on the page), and the copy. -->
+<section class="sh-section sh-section--image-left" aria-labelledby="sh-title-2">
+  <div class="sh-module">
+    <div class="sh-text">
+      <p class="text-eyebrow">Balancer</p>
+      <h2 class="sh-title" id="sh-title-2">Build Trust in Healthcare AI</h2>
+      <dl class="sh-role">
+        <dt>Role</dt>
+        <dd>UX Design/Design Leadership</dd>
+      </dl>
+      <p class="text-lead">My work on Balancer brings systems thinking, accessibility, documentation, and safe interaction design into a healthcare product where clarity and trust matter. Over time, that work expanded from individual contribution into design leadership.</p>
+      <ul class="sh-badges" role="list">
+        <li>Healthcare AI</li>
+        <li>Open source (Code for Philly)</li>
+        <li>Design system</li>
+        <li>WCAG accessibility</li>
+      </ul>
+    </div>
+    <div class="sh-actions">
+      <a class="sh-button sh-button--primary" href="[Balancer case study URL]">See work &amp; outcomes</a>
+      <!-- Optional second action, goes after the primary: <a class="sh-button sh-button--secondary" href="[URL]">Label</a> -->
+    </div>
+    <figure class="sh-figure">
+      <div class="sh-figure__media">
+        <!-- Replace this transparent placeholder src with the image URL -->
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Balancer website app main screen and Balancer design system screen in Figma">
+      </div>
+      <figcaption class="text-caption">The product was originally built by engineers from Tailwind specs; I began translating it into a workable design system in Figma.</figcaption>
+    </figure>
+  </div>
+</section>
+<!-- ===== COPY TO HERE ===== -->
+  </div>
+</div>
 </div>

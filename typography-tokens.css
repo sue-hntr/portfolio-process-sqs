@@ -9,6 +9,9 @@
      Phase 3 — Spacing: 8-step scale, applied via native `p`/`section.page-
                section` plus two opt-in classes (.card-padding /
                .card-grid-gap) — see the SPACING sections below.
+     Phase 4 — Page Section template: layout/radius/surface tokens, H1/H2
+               one step up the scale, a button-hover fix, and three type
+               utility classes, then the Page Section component rules at the end.
 
    Does NOT touch: block structure, existing content, CTA/button markup,
    or Squarespace's global button component styling. Phase 3 is the first
@@ -23,15 +26,16 @@
    clean rem values for practical use:
 
      1rem × 1.25^n, rounded:
-       n=5 → 3.052rem (48.8px) → rounded to 3rem   (48px)  = H1
-       n=3 → 1.953rem (31.25px) → rounded to 2rem  (32px)  = H2
-       n=2 → 1.5625rem          → rounded to 1.5rem(24px)  = H3
+       n=6 → 3.815rem (61.0px)  → rounded to 3.75rem (60px) = H1
+       n=5 → 3.052rem (48.8px)  → rounded to 3rem    (48px) = H2
+       n=2 → 1.5625rem          → rounded to 1.5rem  (24px) = H3
        n=1 → 1.25rem   (20px)                               = H4
        n=0 → 1rem      (16px)   = body / .text-link         = L7
 
-   That lands within ~1px of your current live H1 (~48px) and H2 (~32px),
-   so the new scale reads as continuous with what's already on the site
-   rather than a visible jump.
+   Phase 4 moved H1 and H2 up one step each (they were n=5 / n=3, 3rem and
+   2rem, which matched the live site's ~48px / ~32px). They moved together
+   so the two headings keep a clear size difference everywhere. n=3 and
+   n=4 are now unused; H3 (24px) sits well below H2 (48px) as a result.
 
    H5, H6, and .text-cta intentionally step OFF the pure exponential curve
    (0.875rem / 0.75rem / 0.875rem). Eyebrow text, captions, and CTA labels
@@ -53,8 +57,8 @@
    ------------------------------------------------------------------------
    LEVEL MAP
    ------------------------------------------------------------------------
-   H1        Serif   3rem / 48px   — page / hero title
-   H2        Serif   2rem / 32px   — major section title
+   H1        Serif   3.75rem / 60px — page / hero title
+   H2        Serif   3rem / 48px    — major section title
    H3        Sans    1.5rem / 24px — subsection title
    H4        Serif   1.25rem / 20px — card / project title
    H5        Sans    0.875rem / 14px — eyebrow / small subhead (uppercase)
@@ -63,7 +67,7 @@
    L8 (cta)  Sans    0.875rem / 14px  — .text-cta (uppercase)
 
    ------------------------------------------------------------------------
-   RESPONSIVE OVERRIDES — H1/H2/H3 only
+   RESPONSIVE OVERRIDES — H1/H2/H3, plus Phase 4 layout tokens
    ------------------------------------------------------------------------
    H1 and H2 are the sizes most likely to wrap awkwardly or overpower a
    narrow layout; H3 gets a smaller step for the same reason. H4–H6 and
@@ -71,8 +75,11 @@
    breakpoint-specific sizing.
 
    Two breakpoints, matching common tablet/phone widths:
-     ≤768px (tablet)  H1 2.5rem/40px   H2 1.75rem/28px  H3 1.25rem/20px
-     ≤480px (phone)   H1 2.25rem/36px  H2 1.5rem/24px   H3 1.125rem/18px
+     ≤768px (tablet)  H1 3rem/48px     H2 2.5rem/40px   H3 1.25rem/20px
+     ≤480px (phone)   H1 2.75rem/44px  H2 2.25rem/36px  H3 1.125rem/18px
+
+   The Phase 4 layout tokens (--gutter, --section-y, --module-pad) step
+   down at the same two breakpoints; see their section in :root.
 
    Implemented by re-declaring the tokens inside :root media queries, so
    the h1/h2/h3 rules below (which already reference var(--font-size-h1)
@@ -106,6 +113,7 @@
   /* ---- Primitives ---- */
   --magenta-900: #891085;
   --magenta-900-rgb: 137, 16, 133;
+  --magenta-800: #9E429F;   /* Phase 4 — matches the live Squarespace button hover; white on it is 5.62:1 */
   --magenta-700: #CD18C7;
   --magenta-500: #CF79CC;
   --magenta-200: #F7BBF5;
@@ -152,7 +160,7 @@
 
   /* ---- Semantic: CTA / buttons ---- */
   --color-cta-bg: var(--magenta-900);
-  --color-cta-bg-hover: var(--magenta-700);
+  --color-cta-bg-hover: var(--magenta-800);
   --color-cta-text: var(--white);
   --color-cta-secondary-bg: var(--teal-900);
   --color-cta-secondary-bg-hover: var(--teal-600);
@@ -185,15 +193,15 @@
   --space-8: 6rem;     /* 96px — major section breaks, hero spacing */
 
   /* ---- H1 — Serif — page / hero title ---- */
-  --font-size-h1: 3rem;          /* 48px */
-  --line-height-h1: 1.1;
+  --font-size-h1: 3.75rem;       /* 60px — 1.25^6, rounded (Phase 4) */
+  --line-height-h1: 1.05;
   --font-weight-h1: 400;
   --letter-spacing-h1: 0;
   --margin-bottom-h1: 0.75rem;
 
   /* ---- H2 — Serif — major section title ---- */
-  --font-size-h2: 2rem;          /* 32px */
-  --line-height-h2: 1.15;
+  --font-size-h2: 3rem;          /* 48px — 1.25^5, rounded (Phase 4) */
+  --line-height-h2: 1.1;
   --font-weight-h2: 400;
   --letter-spacing-h2: 0;
   --margin-bottom-h2: 0.75rem;
@@ -241,6 +249,34 @@
   --letter-spacing-cta: 0.06em;  /* uppercase tracking */
   --color-cta: var(--color-primary);
   --color-cta-hover: var(--color-secondary);
+
+  /* ==========================================================================
+     PHASE 4 — PAGE SECTION TEMPLATE (tokens)
+     Values come from the approved Page Section spec. Tokens only here; the
+     component rules come later. Responsive values live in the media
+     queries at the bottom of the file, like the heading sizes.
+     ========================================================================== */
+
+  /* ---- Layout ---- */
+  --measure: 40rem;          /* max line length for lead text */
+  --content-max: 72rem;      /* max width of section content */
+  --gutter: 4rem;            /* = --space-7. 2rem ≤768px, 1.5rem ≤480px */
+  --section-y: 6rem;         /* = --space-8. 4rem ≤768px, 3rem ≤480px */
+  --module-pad: 3rem;        /* = --space-6. 2rem ≤768px, 1.5rem ≤480px */
+
+  /* ---- Radius ---- */
+  --radius-sm: 4px;
+  --radius-lg: 1rem;         /* image box */
+  --radius-xl: 2rem;         /* bordered module */
+  --radius-module-phone: 1rem; /* module corners ≤480px; set to var(--radius-xl) to keep 32px */
+  --radius-pill: 999px;      /* buttons, badges */
+
+  /* ---- Type ---- */
+  --font-size-lead: 1.125rem;    /* 18px, line-height 1.6 */
+  --font-size-caption: 0.875rem; /* 14px, line-height 1.5 */
+
+  /* ---- Surfaces ---- */
+  --color-surface-veil: rgba(255, 255, 255, 0.75); /* translucent module over the section background */
 }
 
 /* ==========================================================================
@@ -308,9 +344,10 @@ h6 {
 /* ==========================================================================
    L7 — .text-link — Sans — opt-in text link style
    Deliberately a custom class, NOT a bare `a` selector, so it doesn't
-   change Squarespace's default sitewide link/button behavior. Apply it
-   selectively (e.g. inline text links in a paragraph block) via the
-   Squarespace editor's "Custom CSS Class" field.
+   change Squarespace's default sitewide link/button behavior. It only
+   takes effect where the class is written into markup, e.g. an
+   <a class="text-link"> inside a Code Block. (Not confirmed that native
+   blocks have a class field in the editor; don't rely on one.)
    ========================================================================== */
 
 .text-link {
@@ -334,8 +371,8 @@ h6 {
 /* ==========================================================================
    L8 — .text-cta — Sans — opt-in button/CTA text style
    Custom class, NOT applied to bare `a`/`button`, so Squarespace's native
-   button component styling sitewide is untouched. Apply to the label
-   inside a custom CTA element via the editor's "Custom CSS Class" field.
+   button component styling sitewide is untouched. Write the class into
+   the markup of a custom CTA element, e.g. inside a Code Block.
    ========================================================================== */
 
 .text-cta {
@@ -366,17 +403,25 @@ h6 {
 
 @media (max-width: 768px) {
   :root {
-    --font-size-h1: 2.5rem;    /* 40px */
-    --font-size-h2: 1.75rem;   /* 28px */
+    --font-size-h1: 3rem;      /* 48px */
+    --font-size-h2: 2.5rem;    /* 40px */
     --font-size-h3: 1.25rem;   /* 20px */
+
+    --gutter: 2rem;            /* Phase 4 */
+    --section-y: 4rem;
+    --module-pad: 2rem;
   }
 }
 
 @media (max-width: 480px) {
   :root {
-    --font-size-h1: 2.25rem;   /* 36px */
-    --font-size-h2: 1.5rem;    /* 24px */
+    --font-size-h1: 2.75rem;   /* 44px */
+    --font-size-h2: 2.25rem;   /* 36px */
     --font-size-h3: 1.125rem;  /* 18px */
+
+    --gutter: 1.5rem;          /* Phase 4 */
+    --section-y: 3rem;
+    --module-pad: 1.5rem;
   }
 }
 
@@ -403,8 +448,8 @@ section.page-section {
 }
 
 /* ---- .card-padding — opt-in — padding inside cards/contained content ----
-   Apply via the Squarespace editor's "Custom CSS Class" field on a card
-   or content block. Not a native selector — project-card markup varies
+   Write the class into the markup of a card or content area (e.g. inside
+   a Code Block). Not a native selector — project-card markup varies
    too much by block type (Summary Block / Gallery Block / Portfolio
    Collection) to safely guess. */
 .card-padding {
@@ -418,4 +463,311 @@ section.page-section {
    verify visually after applying. */
 .card-grid-gap {
   gap: var(--space-5);
+}
+
+/* ==========================================================================
+   PHASE 4 — PAGE SECTION TEMPLATE (utility classes)
+   Custom classes, not bare tags, so nothing sitewide changes. They only
+   take effect where the class is written into markup (e.g. a Code Block).
+   ========================================================================== */
+
+/* Same values as H5, as a class so the project label isn't a heading
+   above the h2. Color is set by the component, not here. */
+.text-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  font-weight: var(--font-weight-h5);
+  letter-spacing: var(--letter-spacing-h5);
+  text-transform: uppercase;
+  margin-bottom: var(--margin-bottom-h5);
+}
+
+.text-lead {
+  font-size: var(--font-size-lead);
+  line-height: 1.6;
+  max-width: var(--measure);
+}
+
+.text-caption {
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-text-body);
+}
+
+/* ==========================================================================
+   PHASE 4 — PAGE SECTION TEMPLATE (component)
+   Markup lives in a Code Block (classes written into the markup). The
+   wrapper is transparent so Squarespace's native section background
+   (video or color) shows through; only the module is translucent.
+   Every rule starts with .sh-section (two-class specificity) so
+   Squarespace's own link and heading styles inside a Code Block don't
+   override it, while block-level editor settings still can. No !important.
+   Modifier: add sh-section--image-left for image-left on desktop.
+   ========================================================================== */
+
+.sh-section,
+.sh-section *,
+.sh-section *::before,
+.sh-section *::after {
+  box-sizing: border-box;
+}
+
+.sh-section {
+  padding: var(--section-y) var(--gutter);
+  background: transparent;
+}
+
+/* Bordered, translucent module: 12-column grid, DOM order is text, then
+   buttons, then figure. */
+.sh-section .sh-module {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 1.5rem;
+  align-items: start;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--module-pad);
+  border: 2px solid var(--color-secondary);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface-veil);
+  color: var(--color-text-body);
+  font-family: var(--font-sans);
+}
+
+/* Default layout (image right): text and buttons in columns 1-7, figure in
+   columns 8-12 spanning both rows. */
+.sh-section .sh-text {
+  grid-column: 1 / 8;
+  grid-row: 1;
+}
+
+.sh-section .sh-actions {
+  grid-column: 1 / 8;
+  grid-row: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.sh-section .sh-figure {
+  grid-column: 8 / 13;
+  grid-row: 1 / 3;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* Image left on desktop: DOM order is unchanged so screen readers still
+   read the text first. */
+.sh-section--image-left .sh-figure {
+  grid-column: 1 / 6;
+}
+
+.sh-section--image-left .sh-text,
+.sh-section--image-left .sh-actions {
+  grid-column: 6 / 13;
+}
+
+/* Text block */
+.sh-section .text-eyebrow {
+  margin-top: 0;
+  color: var(--color-primary);
+}
+
+.sh-section .sh-title {
+  margin-top: 0;
+}
+
+.sh-section .sh-role {
+  margin: var(--space-4) 0 var(--space-3);
+  padding: 0;
+}
+
+.sh-section .sh-role dt {
+  display: block;
+  margin: 0;
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  font-weight: var(--font-weight-h6);
+  letter-spacing: var(--letter-spacing-h6);
+  text-transform: uppercase;
+}
+
+.sh-section .sh-role dd {
+  display: block;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.sh-section .text-lead {
+  margin: 0;
+}
+
+/* Badges: a real list (role="list" keeps list semantics in Safari). */
+.sh-section .sh-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sh-section .sh-badges li {
+  margin: 0;
+  padding: 6px 14px;
+  background: var(--white);
+  border: 1px solid var(--cool-600);
+  border-radius: var(--radius-pill);
+  color: var(--cool-900);
+  font-size: var(--font-size-caption);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Figure: cool-100 placeholder fill until a real image is added. */
+.sh-section .sh-figure__media {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 360px;
+  border-radius: var(--radius-lg);
+  background: var(--cool-100);
+  overflow: hidden;
+}
+
+.sh-section .sh-figure__media img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sh-section .sh-figure figcaption {
+  margin-top: var(--space-2);
+}
+
+/* Buttons, rebuilt from the live Squarespace buttons (matched rather than
+   reusing Squarespace's own classes, so they work inside a Code Block
+   without depending on Site Styles). */
+.sh-section .sh-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  min-width: 220px;
+  padding: 0.875rem 2.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.sh-section .sh-button:hover {
+  text-decoration: none;
+}
+
+.sh-section .sh-button:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 3px;
+}
+
+.sh-section .sh-button--primary {
+  background: var(--color-cta-bg);
+  border-color: var(--color-cta-bg);
+  color: var(--color-cta-text);
+  font-weight: 800;
+}
+
+.sh-section .sh-button--primary:hover {
+  background: var(--color-cta-bg-hover);
+  border-color: var(--color-cta-bg-hover);
+  color: var(--color-cta-text);
+}
+
+.sh-section .sh-button--secondary {
+  background: var(--white);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.sh-section .sh-button--secondary:hover {
+  background: var(--color-primary);
+  color: var(--white);
+}
+
+.sh-section .sh-button--tertiary {
+  background: transparent;
+  border-width: 0 0 2px 0;
+  border-color: var(--color-primary);
+  border-radius: 0;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.sh-section .sh-button--tertiary:hover {
+  background: var(--color-primary);
+  color: var(--white);
+}
+
+/* Tablet and phone (matches the file's existing breakpoints): one column,
+   text then buttons then figure; image becomes 16:9. The image-left
+   modifier has no effect here. */
+@media (max-width: 768px) {
+  .sh-section .sh-module {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sh-section .sh-text,
+  .sh-section .sh-actions,
+  .sh-section .sh-figure,
+  .sh-section--image-left .sh-text,
+  .sh-section--image-left .sh-actions,
+  .sh-section--image-left .sh-figure {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .sh-section .sh-figure {
+    margin-top: var(--space-5);
+  }
+
+  .sh-section .sh-figure__media {
+    flex: none;
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (max-width: 480px) {
+  .sh-section .sh-module {
+    border-radius: var(--radius-module-phone);
+  }
+}
+
+/* Squarespace's own mobile switch is 767px: buttons stack, full width,
+   primary first. */
+@media (max-width: 767px) {
+  .sh-section .sh-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .sh-section .sh-button {
+    width: 100%;
+  }
 }
