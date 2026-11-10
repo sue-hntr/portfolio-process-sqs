@@ -580,6 +580,7 @@ section.page-section {
 
 .sh-section .sh-title {
   margin-top: 0;
+  color: var(--color-text-body); /* our body text color, not Squarespace's heading color */
 }
 
 .sh-section .sh-role {
